@@ -5,8 +5,8 @@ import './Calculator.css'
 
 interface InfoProps {
   title: string;
-  gasolina: number;
-  alcool: number;
+  gasolina: string | number;
+  alcool: string | number;
 }
 export function Calculator() {
   const [gasolinaInput, setGasolinaInput] = useState(0.00)
@@ -19,17 +19,24 @@ export function Calculator() {
     if (calculo <= 0.7) {
       setResultado({
         title: 'Compensa usar Álcool',
-        gasolina: gasolinaInput,
-        alcool: alcoolInput
+        gasolina: formatarMoeda(gasolinaInput),
+        alcool: formatarMoeda(alcoolInput)
       })
 
     } else {
       setResultado({
         title: 'Compensa usar Gasolina',
-        gasolina: gasolinaInput,
-        alcool: alcoolInput
+        gasolina: formatarMoeda(gasolinaInput),
+        alcool: formatarMoeda(alcoolInput)
       })
     }
+  }
+
+  function formatarMoeda(valor: number) {
+    return valor.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    })
   }
 
   return (
